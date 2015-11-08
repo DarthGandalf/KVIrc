@@ -804,6 +804,8 @@ option(WANT_OPENSSL "Whether to compile OpenSSL support" ON)
 if(WANT_OPENSSL)
 	find_package(OpenSSL)
 	if(OPENSSL_FOUND)
+		message(STATUS "AAAAAAAAAAAA ${_OPENSSL_ROOT_HINTS_AND_PATHS}")
+		message(STATUS "AAAAAAAAAAAA ${OPENSSL_LIBRARIES}")
 		if(WIN32)
 			# On windows/mingw we need libeay32 too...
 			find_library(LIB_EAY NAMES libeay32MD eay libeay libeay32
@@ -980,10 +982,7 @@ if(HAVE_INET_ATON_EXISTS)
 endif()
 
 # Check GET_INTERFACE_ADDRESS support
-find_path(GET_INTERFACE_ADDRESS_INCLUDE_DIR net/if.h)
-if(GET_INTERFACE_ADDRESS_INCLUDE_DIR)
-	set(COMPILE_GET_INTERFACE_ADDRESS 1)
-endif()
+CHECK_INCLUDE_FILES("sys/ioctl.h net/if.h" COMPILE_GET_INTERFACE_ADDRESS)
 
 ############################################################################
 # SetEnv/PutEnv support
